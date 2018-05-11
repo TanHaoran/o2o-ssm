@@ -4,7 +4,8 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/resources"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources/spring"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources/mapper"/>
         <property name="context-root" value="o2o"/>
         <property name="java-output-path" value="/o2o/target/classes"/>
     </wb-module>
