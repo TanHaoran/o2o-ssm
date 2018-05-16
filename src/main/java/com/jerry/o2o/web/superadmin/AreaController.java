@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jerry.o2o.entity.Area;
 import com.jerry.o2o.service.AreaService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 @RequestMapping("/superAdmin")
+@Slf4j
 public class AreaController {
 
 	@Autowired
@@ -24,6 +27,9 @@ public class AreaController {
 	@RequestMapping(value = "/listArea", method = RequestMethod.GET)
 	@ResponseBody
 	private Map<String, Object> listArea() {
+		log.info("===start===");
+		long startTime = System.currentTimeMillis();
+
 		Map<String, Object> model = new HashMap<>();
 		List<Area> list = new ArrayList<>();
 
@@ -37,6 +43,12 @@ public class AreaController {
 			model.put("errMsg", e.toString());
 		}
 
+		log.error("测试错误");
+
+		long costTime = System.currentTimeMillis() - startTime;
+
+		log.info("costTime:" + costTime);
+		log.info("===end===");
 		return model;
 	}
 

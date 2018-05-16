@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<configuration scan="true" scanPeriod="60 seconds"
+	debug="false">
+
+	<!-- 定义参数常量 -->
+	<property name="log.level" value="debug" />
+	<property name="log.maxHistory" value="30" />
+	<property name="log.filePath" value="/EclipseProject/o2o/logs" />
+	<property name="log.pattern"
+		value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n" />
+
+	<!-- 控制台设置 -->
+	<appender name="consoleAppender"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${log.pattern}</pattern>
+		</encoder>
+	</appender>
+
+	<!-- DEBUG -->
+	<appender name="debugAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- 文件路径 -->
+		<file>${log.filePath}/debug.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>
+				${log.filePath}/debug/debug.%d{yyyy-MM-dd}.log.gz
+			</fileNamePattern>
+			<maxHistory>${log.maxHistory}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>
+				${log.pattern}
+			</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>DEBUG</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
+	<!-- INFO -->
+	<appender name="infoAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- 文件路径 -->
+		<file>${log.filePath}/info.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>
+				${log.filePath}/info/info.%d{yyyy-MM-dd}.log.gz
+			</fileNamePattern>
+			<maxHistory>${log.maxHistory}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>
+				${log.pattern}
+			</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
+	<!-- ERROR -->
+	<appender name="errorAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- 文件路径 -->
+		<file>${log.filePath}/error.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>
+				${log.filePath}/error/error.%d{yyyy-MM-dd}.log.gz
+			</fileNamePattern>
+			<maxHistory>${log.maxHistory}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>
+				${log.pattern}
+			</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
+	<logger name="com.jerry.o2o" level="debug">
+		<appender-ref ref="debugAppender" />
+		<appender-ref ref="infoAppender" />
+		<appender-ref ref="errorAppender" />
+	</logger>
+
+	<root level="info">
+		<appender-ref ref="consoleAppender" />
+	</root>
+</configuration>
