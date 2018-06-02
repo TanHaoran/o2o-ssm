@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jerry.o2o.dao.ShopDao">
+	<insert id="insertShop" useGeneratedKeys="true"
+		keyColumn="shop_id" keyProperty="shopId">
+		INSERT INTO
+		tb_shop(owner_id, area_id,
+		shop_category_id, shop_name, shop_desc, shop_addr,
+		phone, shop_img,
+		priority,
+		create_time, last_edit_time, enable_status,
+		advice)
+		VALUES
+		(#{owner.userId}, #{area.areaId}, #{shopCategory.shopCategoryId},
+		#{shopName},
+		#{shopDesc}, #{shopAddr}, #{phone}, #{shopImg},
+		#{priority}, #{createTime},
+		#{lastEditTime},
+		#{enableStatus}, #{advice})
+	</insert>
+</mapper>
