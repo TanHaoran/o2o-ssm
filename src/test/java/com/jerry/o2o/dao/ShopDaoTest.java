@@ -43,7 +43,19 @@ public class ShopDaoTest extends BaseTest {
 		int result = shopDao.insertShop(shop);
 
 		assertEquals(1, result);
+	}
+	
+	@Test
+	public void testUpdateShop() {
+		Shop shop = new Shop();
+		shop.setShopId(1L);
+		shop.setShopAddr("修改新的地址");
+		shop.setShopDesc("测试修改一下描述");
+		shop.setLastEditTime(new Date());
 
+		int result = shopDao.updateShop(shop);
+
+		assertEquals(1, result);
 	}
 
 }
