@@ -7,7 +7,7 @@ package com.jerry.o2o.util;
  */
 public class PathUtil {
 
-	private static final String SEPERATOR = System.getProperty("file.seperator");
+	private static final String SEPERATOR = System.getProperty("file.separator");
 
 	/**
 	 * 获取图片存储路径
@@ -31,7 +31,7 @@ public class PathUtil {
 	 * @return
 	 */
 	public static String getShopImagePath(long shopId) {
-		String imagePath = "/upload/item/shop/" + shopId + "/";
+		String imagePath = "upload/item/shop/" + shopId + "/";
 		return imagePath.replace("/", SEPERATOR);
 	}
 }

@@ -8,8 +8,6 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
 
@@ -26,20 +24,20 @@ public class ImageUtil {
 	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
 	private static final Random RANDOM = new Random();
 
-	public static String generateThumbnail(CommonsMultipartFile thumbnail, String targetAddr) {
+	public static String generateThumbnail(File thumbnail, String targetAddr) {
 		String realFileName = getRandomFileName();
 		String extension = getFileExtension(thumbnail);
 		makeDirPath(targetAddr);
 		String relativeAddr = targetAddr + realFileName + extension;
 		File dest = new File(PathUtil.getImgBasePath() + relativeAddr);
 		try {
-			Thumbnails.of(thumbnail.getInputStream()).size(200, 200)
-					.watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(BASE_PATH + "/Watermark.jpg")), 0.25f)
+			Thumbnails.of(thumbnail).size(200, 200)
+					.watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(BASE_PATH + "/rabbit.jpg")), 0.25f)
 					.outputQuality(0.8F).toFile(dest);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return relativeAddr;
 	}
 
 	/**
@@ -60,8 +58,8 @@ public class ImageUtil {
 	 * @param thumbnail
 	 * @return
 	 */
-	private static String getFileExtension(CommonsMultipartFile file) {
-		String originalFileName = file.getOriginalFilename();
+	private static String getFileExtension(File file) {
+		String originalFileName = file.getName();
 		return originalFileName.substring(originalFileName.lastIndexOf("."));
 	}
 
@@ -80,9 +78,9 @@ public class ImageUtil {
 
 	public static void main(String[] args) throws IOException {
 
-		Thumbnails.of(new File("D:\\Picture\\Resource\\puzzle.png")).size(200, 200)
+		Thumbnails.of(new File("D:/Picture/Resource/puzzle.png")).size(200, 200)
 				.watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(BASE_PATH + "rabbit.jpg")), 0.25f)
-				.toFile("D:\\\\Picture\\\\Resource\\\\puzzle_new.png");
+				.toFile("D:/Picture/Resource/puzzle_new.png");
 	}
 
 }
