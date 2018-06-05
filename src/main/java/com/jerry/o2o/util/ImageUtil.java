@@ -45,7 +45,7 @@ public class ImageUtil {
 	 * 
 	 * @return
 	 */
-	private static String getRandomFileName() {
+	public static String getRandomFileName() {
 		// 获取随机五位数
 		int randomNumber = RANDOM.nextInt(89999) + 10000;
 		String nowTimeStr = DATE_FORMAT.format(new Date());
