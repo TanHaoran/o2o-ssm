@@ -20,7 +20,7 @@ public class PathUtil {
 		if (os.toLowerCase().startsWith("win")) {
 			basePath = "D:/EclipseProject/image/";
 		} else {
-			basePath = "/home/jerry/image";
+			basePath = "/home/jerry/image/";
 		}
 		return basePath.replace("/", SEPERATOR);
 	}

@@ -3,6 +3,9 @@ package com.jerry.o2o.service;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Date;
 
 import org.junit.Test;
@@ -22,7 +25,7 @@ public class ShopServiceTest extends BaseTest {
 	private ShopService shopService;
 
 	@Test
-	public void testAddShop() {
+	public void testAddShop() throws FileNotFoundException {
 		Shop shop = new Shop();
 		PersonInfo owner = new PersonInfo();
 		Area area = new Area();
@@ -35,18 +38,18 @@ public class ShopServiceTest extends BaseTest {
 		shop.setOwner(owner);
 		shop.setArea(area);
 		shop.setShopCategory(shopCategory);
-		shop.setShopName("测试店铺1");
-		shop.setShopDesc("test1");
-		shop.setPhone("test1");
-		shop.setShopImg("test1.img");
+		shop.setShopName("测试店铺2");
+		shop.setShopDesc("test2");
+		shop.setPhone("test2");
+		shop.setShopImg("test2.img");
 		shop.setCreateTime(new Date());
 		shop.setEnableStatus(ShopStateEnum.CHECK.getState());
 		shop.setAdvice("审核中");
 
 		// 这里写我们本地的图片地址
 		File shopImg = new File("D:/Picture/Resource/puzzle.png");
-
-		ShopExecution execution = shopService.addShop(shop, shopImg);
+		InputStream in = new FileInputStream(shopImg);
+		ShopExecution execution = shopService.addShop(shop, in, shopImg.getName());
 
 		assertEquals(ShopStateEnum.CHECK.getState(), execution.getState());
 	}
