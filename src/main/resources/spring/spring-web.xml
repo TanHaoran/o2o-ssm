@@ -24,6 +24,17 @@
 		<property name="prefix" value="/WEB-INF/html/"></property>
 		<property name="suffix" value=".html"></property>
 	</bean>
+
+	<!-- 文件上传解析器 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8"></property>
+		<!-- 最大文件大小, 单位是字节, 20MB -->
+		<property name="maxUploadSize" value="20971520"></property>
+		<!-- 最大内存 -->
+		<property name="maxInMemorySize" value="20971520"></property>
+	</bean>
+
 	<!-- 4.扫描web相关的bean -->
 	<context:component-scan
 		base-package="com.jerry.o2o.web" />

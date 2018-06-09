@@ -14,7 +14,7 @@ public class CodeUtil {
 		String validateCodeExpected = (String) request.getSession()
 				.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
 		String validateCode = HttpServletRequestUtil.getString(request, "validateCode");
-		if (validateCode == null || !validateCode.equals(validateCodeExpected)) {
+		if (validateCode == null || !validateCode.equalsIgnoreCase(validateCodeExpected)) {
 			return false;
 		}
 		return true;
