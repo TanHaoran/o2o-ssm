@@ -25,7 +25,7 @@ import com.jerry.o2o.service.ShopService;
 import com.jerry.o2o.util.HttpServletRequestUtil;
 
 @Controller
-@RequestMapping("/shop")
+@RequestMapping("/shopAdmin")
 public class ShopManagementController {
 
 	@Autowired
