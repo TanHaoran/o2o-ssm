@@ -131,6 +131,18 @@
 							</div>
 						</li>
 						<!-- 验证码: kaptcha -->
+						<li>
+							<div class="item-content">
+								<div class="item-inner">
+									<div class="item-title label">验证码</div>
+									<input type="text" id="v_kaptcha" placeholder="验证码">
+									<div class="item-input">
+										<img id="kaptcha_img" alt="点击更换" title="点击更换"
+											onclick="changeValidateCode(this)" src="../Kaptcha" />
+									</div>
+								</div>
+							</div>
+						</li>
 					</ul>
 				</div>
 				<div class="content-block">
@@ -157,6 +169,8 @@
 		src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
 	<script type="text/javascript"
 		src="../resources/js/shop/shop-operation.js" charset='utf-8'></script>
+			<script type="text/javascript"
+		src="../resources/js/common/common.js" charset='utf-8'></script>
 
 </body>
 </html>

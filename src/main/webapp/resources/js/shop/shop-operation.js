@@ -4,7 +4,6 @@
 $(function() {
 	var initUrl = '/o2o/shopAdmin/getShopInitInfo';
 	var registerShopUrl = '/o2o/shopAdmin/registerShop';
-	alert(initUrl);
 	getShopInitInfo();
 	/**
 	 * 初始化选项
@@ -51,6 +50,12 @@ $(function() {
 		var formData = new FormData();
 		formData.append('shopImg', shopImg);
 		formData.append('shopStr', JSON.stringify(shop));
+		var validateCode = $('#v_kaptcha').val();
+		if (!validateCode) {
+			$.toast('请输入验证码');
+			return;
+		}
+		formData.append('validateCode', validateCode);
 		$.ajax({
 			url : registerShopUrl,
 			type : 'POST',
@@ -64,6 +69,7 @@ $(function() {
 				} else {
 					$.toast('提交失败!' + data.errMsg);
 				}
+				$('#kaptcha_img').click();
 			}
 		})
 	});

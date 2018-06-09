@@ -28,6 +28,7 @@ import com.jerry.o2o.exceptions.ShopOperationException;
 import com.jerry.o2o.service.AreaService;
 import com.jerry.o2o.service.ShopCategoryService;
 import com.jerry.o2o.service.ShopService;
+import com.jerry.o2o.util.CodeUtil;
 import com.jerry.o2o.util.HttpServletRequestUtil;
 
 @Controller
@@ -47,6 +48,13 @@ public class ShopManagementController {
 	@ResponseBody
 	private Map<String, Object> registerShop(HttpServletRequest request) {
 		Map<String, Object> result = new HashMap<>();
+
+		// 判断验证码是否正确
+		if (!CodeUtil.checkValidateCode(request)) {
+			result.put("success", false);
+			result.put("errMsg", "验证码不正确");
+			return result;
+		}
 
 		// 1. 接受并转化相应的参数，包括店铺信息以及图片信息
 		String shopStr = HttpServletRequestUtil.getString(request, "shopStr");
