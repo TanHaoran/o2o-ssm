@@ -13,13 +13,9 @@
 		location="classpath:jdbc.properties" />
 
 	<!-- 2.数据库连接池 -->
-	<bean id="dataSource"
-		class="com.mchange.v2.c3p0.ComboPooledDataSource">
-		<!-- 配置连接池属性 -->
-		<property name="driverClass" value="${jdbc.driver}" />
-		<property name="jdbcUrl" value="${jdbc.url}" />
-		<property name="user" value="${jdbc.username}" />
-		<property name="password" value="${jdbc.password}" />
+	<bean id="abstractDataSource" abstract="true"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
 
 		<!-- c3p0连接池的私有属性 -->
 		<property name="maxPoolSize" value="30" />
@@ -30,6 +26,22 @@
 		<property name="checkoutTimeout" value="10000" />
 		<!-- 当获取连接失败重试次数 -->
 		<property name="acquireRetryAttempts" value="2" />
+	</bean>
+
+	<bean id="master" parent="abstractDataSource">
+		<!-- 配置连接池属性 -->
+		<property name="driverClass" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${jdbc.master.url}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+
+	<bean id="slave" parent="abstractDataSource">
+		<!-- 配置连接池属性 -->
+		<property name="driverClass" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${jdbc.slave.url}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
 	</bean>
 
 	<!-- 3.配置SqlSessionFactory对象 -->

@@ -15,4 +15,9 @@
 		<setting name="mapUnderscoreToCamelCase" value="true" />
 	</settings>
 
+	<plugins>
+		<plugin
+			interceptor="com.jerry.o2o.spilit.DynamicDataSourceInterceptor"></plugin>
+	</plugins>
+
 </configuration>
