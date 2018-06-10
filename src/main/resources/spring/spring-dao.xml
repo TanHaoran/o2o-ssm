@@ -44,6 +44,24 @@
 		<property name="password" value="${jdbc.password}" />
 	</bean>
 
+	<!-- 配置动态数据源，targetDataSources就是路由数据源所对应的名称 -->
+	<bean id="dynamicDataSource"
+		class="com.jerry.o2o.spilit.DynamicDataSource">
+		<property name="targetDataSources">
+			<map>
+				<entry value-ref="master" key="master"></entry>
+				<entry value-ref="slave" key="slave"></entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
+		<property name="targetDataSource">
+			<ref bean="dynamicDataSource" />
+		</property>
+	</bean>
+
 	<!-- 3.配置SqlSessionFactory对象 -->
 	<bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">

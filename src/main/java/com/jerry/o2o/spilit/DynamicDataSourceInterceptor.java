@@ -19,6 +19,10 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 
 import lombok.extern.slf4j.Slf4j;
 
+// 增删改的操作都会封装到update中
+@Intercepts({ @Signature(type = Executor.class, method = "update", args = { MappedStatement.class, Object.class }),
+		@Signature(type = Executor.class, method = "query", args = { MappedStatement.class, Object.class,
+				RowBounds.class, ResultHandler.class }) })
 @Slf4j
 public class DynamicDataSourceInterceptor implements Interceptor {
 
