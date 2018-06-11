@@ -18,7 +18,11 @@ import com.jerry.o2o.entity.PersonInfo;
 import com.jerry.o2o.entity.Shop;
 import com.jerry.o2o.entity.ShopCategory;
 import com.jerry.o2o.enums.ShopStateEnum;
+import com.jerry.o2o.exceptions.ShopOperationException;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class ShopServiceTest extends BaseTest {
 
 	@Autowired
@@ -52,5 +56,18 @@ public class ShopServiceTest extends BaseTest {
 		ShopExecution execution = shopService.addShop(shop, in, shopImg.getName());
 
 		assertEquals(ShopStateEnum.CHECK.getState(), execution.getState());
+	}
+
+	@Test
+	public void testModifyShop() throws ShopOperationException, FileNotFoundException {
+		Shop shop = new Shop();
+		shop.setShopId(35l);
+		shop.setShopName("修改了图片的店铺");
+
+		File shopImg = new File("D:/Picture/Resource/avatar.jpg");
+		InputStream in = new FileInputStream(shopImg);
+		ShopExecution shopExecution = shopService.modifyShop(shop, in, "avatar.jpg");
+		log.info("新的图片地址:" + shopExecution.getShop().getShopImg());
+		assertEquals("修改了图片的店铺", shopExecution.getShop().getShopName());
 	}
 }

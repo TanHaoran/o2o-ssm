@@ -76,6 +76,24 @@ public class ImageUtil {
 		}
 	}
 
+	/**
+	 * 删除文件或者目录下的所有文件和该目录
+	 * 
+	 * @param storePath
+	 */
+	public static void deleteFileOrPath(String storePath) {
+		File fileOrPath = new File(PathUtil.getImgBasePath() + storePath);
+		if (fileOrPath.exists()) {
+			if (fileOrPath.isDirectory()) {
+				File files[] = fileOrPath.listFiles();
+				for (File file : files) {
+					file.delete();
+				}
+			}
+			fileOrPath.delete();
+		}
+	}
+
 	public static void main(String[] args) throws IOException {
 
 		Thumbnails.of(new File("D:/Picture/Resource/puzzle.png")).size(200, 200)
