@@ -1,6 +1,7 @@
 package com.jerry.o2o.dao;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.Date;
 
@@ -13,6 +14,9 @@ import com.jerry.o2o.entity.PersonInfo;
 import com.jerry.o2o.entity.Shop;
 import com.jerry.o2o.entity.ShopCategory;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class ShopDaoTest extends BaseTest {
 
 	@Autowired
@@ -44,7 +48,7 @@ public class ShopDaoTest extends BaseTest {
 
 		assertEquals(1, result);
 	}
-	
+
 	@Test
 	public void testUpdateShop() {
 		Shop shop = new Shop();
@@ -56,6 +60,15 @@ public class ShopDaoTest extends BaseTest {
 		int result = shopDao.updateShop(shop);
 
 		assertEquals(1, result);
+	}
+
+	@Test
+	public void testQueryByShopId() {
+		long shopId = 1l;
+		Shop shop = shopDao.queryByShopId(shopId);
+		log.info("areaId:" + shop.getArea().getAreaId());
+		log.info("areaName:" + shop.getArea().getAreaName());
+		assertNotNull(shop);
 	}
 
 }

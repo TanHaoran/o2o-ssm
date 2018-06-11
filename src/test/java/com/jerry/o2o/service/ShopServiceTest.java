@@ -38,13 +38,13 @@ public class ShopServiceTest extends BaseTest {
 		shop.setOwner(owner);
 		shop.setArea(area);
 		shop.setShopCategory(shopCategory);
-		shop.setShopName("新加盟店铺");
+		shop.setShopName("我的最新的测试好的");
 		shop.setShopDesc("test2");
 		shop.setPhone("test2");
 		shop.setShopImg("test2.img");
 		shop.setCreateTime(new Date());
 		shop.setEnableStatus(ShopStateEnum.CHECK.getState());
-		shop.setAdvice("审核中");
+		shop.setAdvice("正在审核中");
 
 		// 这里写我们本地的图片地址
 		File shopImg = new File("D:/Picture/Resource/puzzle.png");
