@@ -83,8 +83,8 @@ public class ShopManagementController {
 
 		// 2. 注册店铺
 		if (shop != null && shopImg != null) {
-			PersonInfo owner = new PersonInfo();
-			// Session TODO
+			// 从Session中获取登录用户的信息
+			PersonInfo owner = (PersonInfo) request.getSession().getAttribute("user");
 			owner.setUserId(1l);
 			shop.setOwner(owner);
 			ShopExecution se;
@@ -92,6 +92,14 @@ public class ShopManagementController {
 				se = shopservice.addShop(shop, shopImg.getInputStream(), shopImg.getOriginalFilename());
 				if (se.getState() == ShopStateEnum.CHECK.getState()) {
 					result.put("success", true);
+					// 取出用户可以操作的店铺列表
+					@SuppressWarnings("unchecked")
+					List<Shop> shopList = (List<Shop>) request.getSession().getAttribute("shiopList");
+					if (shopList == null || shopList.size() == 0) {
+						shopList = new ArrayList<>();
+					}
+					shopList.add(se.getShop());
+					request.getSession().setAttribute("shopList", shopList);
 				} else {
 					result.put("success", false);
 					result.put("errMsg", se.getStateInfo());
@@ -130,4 +138,89 @@ public class ShopManagementController {
 		return result;
 	}
 
+	@RequestMapping(value = "/getShopById", method = RequestMethod.GET)
+	@ResponseBody
+	private Map<String, Object> getShopById(HttpServletRequest request) {
+		Map<String, Object> result = new HashMap<>();
+		Long shopId = HttpServletRequestUtil.getLong(request, "shopId");
+		if (shopId > -1) {
+			try {
+				Shop shop = shopservice.getByShopId(shopId);
+				List<Area> areaList = areaService.getAreaList();
+				result.put("shop", shop);
+				result.put("areaList", areaList);
+				result.put("success", true);
+			} catch (Exception e) {
+				result.put("success", false);
+				result.put("errMsg", e.getMessage());
+			}
+		} else {
+			result.put("success", false);
+			result.put("errMsg", "empty shopId");
+		}
+		return result;
+	}
+
+	@RequestMapping(value = "/modifyShop", method = RequestMethod.POST)
+	@ResponseBody
+	private Map<String, Object> modifyShop(HttpServletRequest request) {
+		Map<String, Object> result = new HashMap<>();
+
+		// 判断验证码是否正确
+		if (!CodeUtil.checkValidateCode(request)) {
+			result.put("success", false);
+			result.put("errMsg", "验证码不正确");
+			return result;
+		}
+
+		// 1. 接受并转化相应的参数，包括店铺信息以及图片信息
+		String shopStr = HttpServletRequestUtil.getString(request, "shopStr");
+		ObjectMapper mapper = new ObjectMapper();
+		Shop shop = null;
+		try {
+			shop = mapper.readValue(shopStr, Shop.class);
+		} catch (Exception e) {
+			result.put("success", false);
+			result.put("errMsg", e.getMessage());
+			return result;
+		}
+		// 将CommonsMultipartFile转换成File
+		CommonsMultipartFile shopImg = null;
+		CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(
+				request.getSession().getServletContext());
+		// 检测文件是否有上传文件流
+		if (commonsMultipartResolver.isMultipart(request)) {
+			MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
+			shopImg = (CommonsMultipartFile) multipartHttpServletRequest.getFile("shopImg");
+		}
+
+		// 2. 修改店铺
+		if (shop != null && shop.getShopId() != null) {
+			ShopExecution se;
+			try {
+				if (shopImg == null) {
+					se = shopservice.modifyShop(shop, null, null);
+				} else {
+					se = shopservice.modifyShop(shop, shopImg.getInputStream(), shopImg.getOriginalFilename());
+				}
+				if (se.getState() == ShopStateEnum.SUCCESS.getState()) {
+					result.put("success", true);
+				} else {
+					result.put("success", false);
+					result.put("errMsg", se.getStateInfo());
+				}
+			} catch (ShopOperationException e) {
+				result.put("success", false);
+				result.put("errMsg", e.getMessage());
+			} catch (IOException e) {
+				result.put("success", false);
+				result.put("errMsg", e.getMessage());
+			}
+			return result;
+		} else {
+			result.put("success", false);
+			result.put("errMsg", "请输入店铺id");
+			return result;
+		}
+	}
 }
