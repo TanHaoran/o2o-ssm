@@ -2,9 +2,19 @@
  * 
  */
 $(function() {
+	var shopId = getQueryString("shopId");
+	var isEdit = shopId ? true : false;
 	var initUrl = '/o2o/shopAdmin/getShopInitInfo';
 	var registerShopUrl = '/o2o/shopAdmin/registerShop';
-	getShopInitInfo();
+	var shopInfoUrl = "/o2o/shopAdmin/getShopById?shopId=" + shopId;
+	var editShopUrl = '/o2o/shopAdmin/modifyShop';
+
+	if (!isEdit) {
+		getShopInitInfo();
+	} else {
+		getShopInfo(shopId);
+	}
+
 	/**
 	 * 初始化选项
 	 */
@@ -22,7 +32,35 @@ $(function() {
 							+ item.areaName + '</option>';
 				});
 				$('#shop-category').html(tempHtml);
+				$("#area option[data-id='" + shop.area.areaId + "']").attr(
+						"selected", "selected");
+			}
+		});
+	}
+
+	/**
+	 * 编辑状态下获取店铺信息
+	 */
+	function getShopInfo(shopId) {
+		$.getJSON(shopInfoUrl, function(data) {
+			if (data.success) {
+				var shop = data.shop;
+				$('#shop-name').val(shop.shopName);
+				$('#shop-addr').val(shop.shopAddr);
+				$('#shop-phone').val(shop.phone);
+				$('#shop-desc').val(shop.shopDesc);
+				var shopCategory = '<option data-id="'
+						+ shop.shopCategory.shopCategoryId + '" selected>'
+						+ shop.shopCategory.shopCategoryName + '</option>';
+				var tempAreaHtml = '';
+				data.areaList.map(function(item, index) {
+					tempAreaHtml += '<option data-id="' + item.areaId + '">'
+							+ item.areaName + ' </option>';
+				});
+				$('#shop-category').html(shopCategory);
+				$('#shop-category').attr('disabled', 'disabled');
 				$('#area').html(tempAreaHtml);
+				$('#shop').attr('data-id', shop.areaId);
 			}
 		});
 	}
@@ -32,6 +70,9 @@ $(function() {
 	 */
 	$('#submit').click(function() {
 		var shop = {};
+		if (isEdit) {
+			shop.shopId = shopId;
+		}
 		shop.shopName = $('#shop-name').val();
 		shop.shopAddr = $('#shop-addr').val();
 		shop.phone = $('#shop-phone').val();
@@ -57,7 +98,7 @@ $(function() {
 		}
 		formData.append('validateCode', validateCode);
 		$.ajax({
-			url : registerShopUrl,
+			url : isEdit ? editShopUrl : registerShopUrl,
 			type : 'POST',
 			data : formData,
 			contentType : false,
