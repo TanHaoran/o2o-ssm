@@ -70,4 +70,16 @@ public class ShopServiceTest extends BaseTest {
 		log.info("新的图片地址:" + shopExecution.getShop().getShopImg());
 		assertEquals("修改了图片的店铺", shopExecution.getShop().getShopName());
 	}
+
+	@Test
+	public void testGetShopList() {
+		Shop shopCondition = new Shop();
+		ShopCategory sc = new ShopCategory();
+		sc.setShopCategoryId(2l);
+		shopCondition.setShopCategory(sc);
+		ShopExecution se = shopService.getShopList(shopCondition, 1, 4);
+
+		assertEquals(4l, se.getShopList().size());
+		assertEquals(6l, se.getCount());
+	}
 }
