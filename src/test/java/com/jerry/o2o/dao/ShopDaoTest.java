@@ -2,8 +2,10 @@ package com.jerry.o2o.dao;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +71,26 @@ public class ShopDaoTest extends BaseTest {
 		log.info("areaId:" + shop.getArea().getAreaId());
 		log.info("areaName:" + shop.getArea().getAreaName());
 		assertNotNull(shop);
+	}
+
+	@Test
+	public void testQueryShopList() {
+		Shop shopCondition = new Shop();
+		PersonInfo owner = new PersonInfo();
+		owner.setUserId(1l);
+		shopCondition.setOwner(owner);
+		List<Shop> shopList = shopDao.queryShopList(shopCondition, 0, 5);
+
+		int count = shopDao.queryShopCount(shopCondition);
+
+		ShopCategory sc = new ShopCategory();
+		sc.setShopCategoryId(2l);
+		shopCondition.setShopCategory(sc);
+		List<Shop> shopList2 = shopDao.queryShopList(shopCondition, 0, 10);
+
+		assertEquals(5, shopList.size());
+		assertTrue(count > 20);
+		assertEquals(6l, shopList2.size());
 	}
 
 }
