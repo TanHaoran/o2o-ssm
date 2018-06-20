@@ -223,4 +223,56 @@ public class ShopManagementController {
 			return result;
 		}
 	}
+
+	@RequestMapping(value = "/getShopList", method = RequestMethod.GET)
+	@ResponseBody
+	private Map<String, Object> getShopList(HttpServletRequest request) {
+		Map<String, Object> result = new HashMap<>();
+
+		PersonInfo user = new PersonInfo();
+		user.setUserId(1l);
+		user.setName("test");
+		request.getSession().setAttribute("user", user);
+
+		user = (PersonInfo) request.getSession().getAttribute("user");
+		try {
+			Shop shopCondition = new Shop();
+			shopCondition.setOwner(user);
+			ShopExecution se = shopservice.getShopList(shopCondition, 0, 100);
+			result.put("shopList", se.getShopList());
+			result.put("user", user);
+			result.put("success", false);
+		} catch (Exception e) {
+			result.put("success", false);
+			result.put("errMsg", e.getMessage());
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/getShopManagementInfo", method = RequestMethod.GET)
+	private Map<String, Object> getShopManagementInfo(HttpServletRequest request) {
+		Map<String, Object> result = new HashMap<>();
+
+		long shopId = HttpServletRequestUtil.getLong(request, "shopId");
+		if (shopId < 0) {
+			Object currentShopObj = request.getSession().getAttribute("currentShop");
+			if (currentShopObj == null) {
+				result.put("redirect", true);
+				result.put("url", "/o2o/shop/shopList");
+			} else {
+				Shop currentShop = (Shop) currentShopObj;
+				result.put("redirect", false);
+				result.put("shopId", currentShop.getShopId());
+			}
+		} else {
+			Shop currentShop = new Shop();
+			currentShop.setShopId(shopId);
+			request.getSession().setAttribute("currentShop", currentShop);
+			result.put("redirect", false);
+		}
+
+		return result;
+	}
+
 }
