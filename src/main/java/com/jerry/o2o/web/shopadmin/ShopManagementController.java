@@ -251,6 +251,7 @@ public class ShopManagementController {
 	}
 
 	@RequestMapping(value = "/getShopManagementInfo", method = RequestMethod.GET)
+	@ResponseBody
 	private Map<String, Object> getShopManagementInfo(HttpServletRequest request) {
 		Map<String, Object> result = new HashMap<>();
 
@@ -259,7 +260,7 @@ public class ShopManagementController {
 			Object currentShopObj = request.getSession().getAttribute("currentShop");
 			if (currentShopObj == null) {
 				result.put("redirect", true);
-				result.put("url", "/o2o/shop/shopList");
+				result.put("url", "/o2o/shopAdmin/shopList");
 			} else {
 				Shop currentShop = (Shop) currentShopObj;
 				result.put("redirect", false);
