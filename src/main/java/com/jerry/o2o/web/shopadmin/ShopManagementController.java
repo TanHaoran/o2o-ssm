@@ -241,7 +241,7 @@ public class ShopManagementController {
 			ShopExecution se = shopservice.getShopList(shopCondition, 0, 100);
 			result.put("shopList", se.getShopList());
 			result.put("user", user);
-			result.put("success", false);
+			result.put("success", true);
 		} catch (Exception e) {
 			result.put("success", false);
 			result.put("errMsg", e.getMessage());

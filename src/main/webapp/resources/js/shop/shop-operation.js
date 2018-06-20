@@ -32,8 +32,7 @@ $(function() {
 							+ item.areaName + '</option>';
 				});
 				$('#shop-category').html(tempHtml);
-				$("#area option[data-id='" + shop.area.areaId + "']").attr(
-						"selected", "selected");
+				$('#area').html(tempAreaHtml);
 			}
 		});
 	}
@@ -60,7 +59,8 @@ $(function() {
 				$('#shop-category').html(shopCategory);
 				$('#shop-category').attr('disabled', 'disabled');
 				$('#area').html(tempAreaHtml);
-				$('#shop').attr('data-id', shop.areaId);
+				$("#area option[data-id='" + shop.area.areaId + "']").attr(
+						"selected", "selected");
 			}
 		});
 	}
