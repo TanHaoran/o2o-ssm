@@ -14,4 +14,19 @@ public enum ProductCategoryStateEnum {
 		this.state = state;
 		this.stateInfo = stateInfo;
 	}
+
+	/**
+	 * 根据传入状态值返回枚举类
+	 * 
+	 * @param index
+	 * @return
+	 */
+	public static ProductCategoryStateEnum stateOf(int index) {
+		for (ProductCategoryStateEnum state : values()) {
+			if (state.getState() == index) {
+				return state;
+			}
+		}
+		return null;
+	}
 }
