@@ -72,4 +72,35 @@ $(function() {
 			}
 		});
 	});
+
+	$('.category-wrap').on('click', '.row-product-category.temp .delete',
+			function(e) {
+				console.log($(this).parent().parent());
+				$(this).parent().parent().remove();
+			});
+
+	$('.category-wrap').on('click', '.row-product-category.now .delete',
+			function(e) {
+				var target = e.currentTarget;
+				$.confirm('确定么?', function() {
+					$.ajax({
+						url : deleteUrl,
+						type : 'POST',
+						data : {
+							productCategoryId : target.dataset.id,
+							shopId : shopId
+						},
+						dataType : 'json',
+						success : function(data) {
+							if (data.success) {
+								$.toast('删除成功！');
+								getList();
+							} else {
+								$.toast('删除失败！');
+							}
+						}
+					});
+				});
+			});
+
 });
