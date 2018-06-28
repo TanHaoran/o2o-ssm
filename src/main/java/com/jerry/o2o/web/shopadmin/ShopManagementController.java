@@ -18,6 +18,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jerry.o2o.dto.ImageHolder;
 import com.jerry.o2o.dto.ShopExecution;
 import com.jerry.o2o.entity.Area;
 import com.jerry.o2o.entity.PersonInfo;
@@ -89,7 +90,8 @@ public class ShopManagementController {
 			shop.setOwner(owner);
 			ShopExecution se;
 			try {
-				se = shopservice.addShop(shop, shopImg.getInputStream(), shopImg.getOriginalFilename());
+				se = shopservice.addShop(shop,
+						new ImageHolder(shopImg.getInputStream(), shopImg.getOriginalFilename()));
 				if (se.getState() == ShopStateEnum.CHECK.getState()) {
 					result.put("success", true);
 					// 取出用户可以操作的店铺列表
@@ -199,9 +201,10 @@ public class ShopManagementController {
 			ShopExecution se;
 			try {
 				if (shopImg == null) {
-					se = shopservice.modifyShop(shop, null, null);
+					se = shopservice.modifyShop(shop, new ImageHolder(null, null));
 				} else {
-					se = shopservice.modifyShop(shop, shopImg.getInputStream(), shopImg.getOriginalFilename());
+					se = shopservice.modifyShop(shop,
+							new ImageHolder(shopImg.getInputStream(), shopImg.getOriginalFilename()));
 				}
 				if (se.getState() == ShopStateEnum.SUCCESS.getState()) {
 					result.put("success", true);

@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jerry.o2o.BaseTest;
+import com.jerry.o2o.dto.ImageHolder;
 import com.jerry.o2o.dto.ShopExecution;
 import com.jerry.o2o.entity.Area;
 import com.jerry.o2o.entity.PersonInfo;
@@ -53,7 +54,7 @@ public class ShopServiceTest extends BaseTest {
 		// 这里写我们本地的图片地址
 		File shopImg = new File("D:/Picture/Resource/puzzle.png");
 		InputStream in = new FileInputStream(shopImg);
-		ShopExecution execution = shopService.addShop(shop, in, shopImg.getName());
+		ShopExecution execution = shopService.addShop(shop, new ImageHolder(in, shopImg.getName()));
 
 		assertEquals(ShopStateEnum.CHECK.getState(), execution.getState());
 	}
@@ -66,7 +67,7 @@ public class ShopServiceTest extends BaseTest {
 
 		File shopImg = new File("D:/Picture/Resource/avatar.jpg");
 		InputStream in = new FileInputStream(shopImg);
-		ShopExecution shopExecution = shopService.modifyShop(shop, in, "avatar.jpg");
+		ShopExecution shopExecution = shopService.modifyShop(shop, new ImageHolder(in, "avatar.jpg"));
 		log.info("新的图片地址:" + shopExecution.getShop().getShopImg());
 		assertEquals("修改了图片的店铺", shopExecution.getShop().getShopName());
 	}
