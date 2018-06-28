@@ -3,7 +3,7 @@ package com.jerry.o2o.service;
 import java.util.List;
 
 import com.jerry.o2o.dto.ImageHolder;
-import com.jerry.o2o.dto.ProductCategoryExecution;
+import com.jerry.o2o.dto.ProductExecution;
 import com.jerry.o2o.entity.Product;
 import com.jerry.o2o.exceptions.ProductOperationException;
 
@@ -15,12 +15,12 @@ public interface ProductService {
 	 * @param product
 	 * @param thumbnail
 	 *            缩略图
-	 * @param productImgList
+	 * @param productImgHolderList
 	 *            详情图
 	 * @return
 	 * @throws ProductOperationException
 	 */
-	ProductCategoryExecution addProduct(Product product, ImageHolder thumbnail, List<ImageHolder> productImgList)
+	ProductExecution addProduct(Product product, ImageHolder thumbnail, List<ImageHolder> productImgHolderList)
 			throws ProductOperationException;
 
 }
