@@ -62,7 +62,7 @@
 		)
 	</insert>
 	
-	<select id="queryProductById" resultMap="productMap"
+	<select id="queryProductByProductId" resultMap="productMap"
 		parameterType="Long">
 		SELECT
 		p.product_id,

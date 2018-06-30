@@ -27,13 +27,13 @@ public class ProductImgDaoTest extends BaseTest {
 		productImg1.setImgDesc("测试图片1");
 		productImg1.setPriority(1);
 		productImg1.setCreateTime(new Date());
-		productImg1.setProductId(2L);
+		productImg1.setProductId(16l);
 		ProductImg productImg2 = new ProductImg();
 		productImg2.setImgAddr("图片2");
 		productImg1.setImgDesc("测试图片2");
 		productImg2.setPriority(1);
 		productImg2.setCreateTime(new Date());
-		productImg2.setProductId(2L);
+		productImg2.setProductId(16l);
 		List<ProductImg> productImgList = new ArrayList<ProductImg>();
 		productImgList.add(productImg1);
 		productImgList.add(productImg2);
@@ -42,8 +42,14 @@ public class ProductImgDaoTest extends BaseTest {
 	}
 
 	@Test
-	public void testBDeleteProductImgByProductId() throws Exception {
-		long productId = 2;
+	public void testBQueryProductImgList() {
+		List<ProductImg> productImgList = productImgDao.queryProductImgList(16);
+		assertEquals(2, productImgList.size());
+	}
+
+	@Test
+	public void testCDeleteProductImgByProductId() throws Exception {
+		long productId = 16;
 		int effectedNum = productImgDao.deleteProductImgByProductId(productId);
 		assertEquals(2, effectedNum);
 	}

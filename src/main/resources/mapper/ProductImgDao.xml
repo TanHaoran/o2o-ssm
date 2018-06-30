@@ -24,6 +24,21 @@
 		</foreach>
 	</insert>
 
+	<select id="queryProductImgList"
+		resultType="com.jerry.o2o.entity.ProductImg">
+		SELECT
+		product_img_id,
+		img_addr,
+		img_desc,
+		priority,
+		create_time,
+		product_id
+		FROM tb_product_img
+		WHERE product_id=#{productId}
+		ORDER BY
+		product_img_id ASC
+	</select>
+
 	<delete id="deleteProductImgByProductId">
 		DELETE FROM
 		tb_product_img
