@@ -63,7 +63,7 @@ $(function() {
 				var productCategoryList = data.data;
 				var optionHtml = '';
 				productCategoryList.map(function(item, index) {
-					optionHtml = '<option data-value="'
+					optionHtml += '<option data-value="'
 							+ item.productCategoryId + '">'
 							+ item.productCategoryName + '</option>';
 				});
@@ -80,8 +80,7 @@ $(function() {
 	});
 
 	// 提交按钮的事件响应，分别对商品添加和编辑操作作不同的响应
-	$('#submit').on(
-			'click',
+	$('#submit').click(
 			function() {
 				// 创建商品 json 对象，分别从表单里获取对应的属性值
 				var product = {};
@@ -110,7 +109,7 @@ $(function() {
 							// 判断该控件是否已选择了文件
 							if ($('.detail-img')[index].files.length > 0) {
 								// 将第i个文件流赋值给key为productImg的表单键值对
-								formData.append('.productImg' + index,
+								formData.append('productImg' + index,
 										$('.detail-img')[index].files[0]);
 							}
 						});
@@ -123,7 +122,7 @@ $(function() {
 					$.toast('请输入验证码!');
 					return;
 				}
-				formData.append("validateCodeActual", validateCode);
+				formData.append("validateCode", validateCode);
 
 				// 将数据提交至后台处理相关操作
 				$.ajax({
