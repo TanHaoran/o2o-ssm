@@ -30,6 +30,7 @@ public class ProductImgDaoTest extends BaseTest {
 		productImg1.setProductId(2L);
 		ProductImg productImg2 = new ProductImg();
 		productImg2.setImgAddr("图片2");
+		productImg1.setImgDesc("测试图片2");
 		productImg2.setPriority(1);
 		productImg2.setCreateTime(new Date());
 		productImg2.setProductId(2L);
@@ -37,6 +38,13 @@ public class ProductImgDaoTest extends BaseTest {
 		productImgList.add(productImg1);
 		productImgList.add(productImg2);
 		int effectedNum = productImgDao.batchInsertProductImg(productImgList);
+		assertEquals(2, effectedNum);
+	}
+
+	@Test
+	public void testBDeleteProductImgByProductId() throws Exception {
+		long productId = 2;
+		int effectedNum = productImgDao.deleteProductImgByProductId(productId);
 		assertEquals(2, effectedNum);
 	}
 
