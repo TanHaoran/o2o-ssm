@@ -43,7 +43,7 @@ $(function() {
 										.map(function(item, index) {
 											var isSelect = optionSelected === item.productCategoryId ? 'selected'
 													: '';
-											optionHtml != '<option data-value="'
+											optionHtml += '<option data-value="'
 													+ item.productCategoryId
 													+ '"'
 													+ isSelect
