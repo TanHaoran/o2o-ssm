@@ -130,4 +130,10 @@ public class ProductDaoTest extends BaseTest {
 		assertEquals(11, count);
 	}
 
+	@Test
+	public void testEUpdateProductCategoryToNull() {
+		int effectedNum = productDao.updateProductCategoryToNull(11l);
+		assertEquals(1, effectedNum);
+	}
+
 }
