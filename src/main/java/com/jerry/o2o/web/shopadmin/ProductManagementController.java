@@ -223,4 +223,56 @@ public class ProductManagementController {
 		return result;
 	}
 
+	@RequestMapping(value = "/getProductListByShop", method = RequestMethod.GET)
+	@ResponseBody
+	private Map<String, Object> getProductListByShop(HttpServletRequest request) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		// 获取前台传过来的页码
+		int pageIndex = HttpServletRequestUtil.getInt(request, "pageIndex");
+		// 获取前台传过来的每页要求返回的商品数
+		int pageSize = HttpServletRequestUtil.getInt(request, "pageSize");
+		// 从session中获取店铺信息
+		Shop currentShop = (Shop) request.getSession().getAttribute("currentShop");
+		if ((pageIndex > -1) && (pageSize > -1) && (currentShop != null) && (currentShop.getShopId() != null)) {
+			// 获取传入的检索条件
+			long productCategoryId = HttpServletRequestUtil.getLong(request, "productCategoryId");
+			String productName = HttpServletRequestUtil.getString(request, "productName");
+			Product productCondition = compactProductCondition4Search(currentShop.getShopId(), productCategoryId,
+					productName);
+			// 传入查询条件以及分页信息查询，返回响应商品列表及总数
+			ProductExecution pe = productService.getProductList(productCondition, pageIndex, pageSize);
+			result.put("productList", pe.getProductList());
+			result.put("count", pe.getCount());
+			result.put("success", true);
+		} else {
+			result.put("success", false);
+			result.put("errMsg", "empty pageSize or pageIndex or shopId");
+		}
+		return result;
+	}
+
+	/**
+	 * 组合查询条件
+	 * 
+	 * @param shopId
+	 * @param productCategoryId
+	 * @param productName
+	 * @return
+	 */
+	private Product compactProductCondition4Search(long shopId, long productCategoryId, String productName) {
+		Product productCondition = new Product();
+		Shop shop = new Shop();
+		shop.setShopId(shopId);
+		productCondition.setShop(shop);
+		if (productCategoryId != -1L) {
+			ProductCategory productCategory = new ProductCategory();
+			productCategory.setProductCategoryId(productCategoryId);
+			productCondition.setProductCategory(productCategory);
+		}
+		if (productName != null && !productName.equalsIgnoreCase("null")) {
+			productCondition.setProductName(productName);
+		}
+		return productCondition;
+	}
+
 }

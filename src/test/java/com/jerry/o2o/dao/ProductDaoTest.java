@@ -113,4 +113,21 @@ public class ProductDaoTest extends BaseTest {
 		assertEquals(1, effectedNum);
 	}
 
+	@Test
+	public void testDQueryProductList() throws Exception {
+		Product productCondition = new Product();
+		List<Product> productList = productDao.queryProductList(productCondition, 0, 3);
+		assertEquals(3, productList.size());
+
+		int count = productDao.queryProductCount(productCondition);
+		assertEquals(14, count);
+
+		productCondition.setProductName("测试");
+		productList = productDao.queryProductList(productCondition, 0, 10);
+		assertEquals(10, productList.size());
+
+		count = productDao.queryProductCount(productCondition);
+		assertEquals(11, count);
+	}
+
 }
