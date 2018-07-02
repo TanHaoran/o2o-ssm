@@ -9,6 +9,7 @@
 		SELECT
 		shop_category_id,
 		shop_category_name,
+		shop_category_desc,
 		shop_category_img,
 		priority,
 		create_time,

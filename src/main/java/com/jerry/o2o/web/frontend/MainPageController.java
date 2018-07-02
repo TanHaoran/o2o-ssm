@@ -17,7 +17,7 @@ import com.jerry.o2o.service.HeadLineService;
 import com.jerry.o2o.service.ShopCategoryService;
 
 @Controller
-@RequestMapping("/frontEnd")
+@RequestMapping("/frontend")
 public class MainPageController {
 
 	@Autowired
