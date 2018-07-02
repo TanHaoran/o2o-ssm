@@ -17,12 +17,17 @@
 		FROM
 		tb_shop_category
 		<where>
+			<if test="shopCategoryCondition == null">
+				AND
+				parent_id is null
+			</if>
 			<if test="shopCategoryCondition != null">
-				and
+				AND
 				parent_id is not null
 			</if>
-			<if test="shopCategoryCondition.parent != null">
-				and
+			<if
+				test="shopCategoryCondition != null and shopCategoryCondition.parent != null">
+				AND
 				parent_id=#{shopCategoryCondition.parent.shopCategoryId}
 			</if>
 		</where>
