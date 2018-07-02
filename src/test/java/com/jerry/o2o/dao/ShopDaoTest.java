@@ -93,4 +93,18 @@ public class ShopDaoTest extends BaseTest {
 		assertEquals(6l, shopList2.size());
 	}
 
+	@Test
+	public void testQueryShopListParent() {
+		Shop shopCondition = new Shop();
+		ShopCategory childCategory = new ShopCategory();
+		ShopCategory parentCategory = new ShopCategory();
+		parentCategory.setShopCategoryId(1l);
+		childCategory.setParent(parentCategory);
+		shopCondition.setShopCategory(childCategory);
+
+		List<Shop> shopList = shopDao.queryShopList(shopCondition, 0, 99);
+
+		assertEquals(9, shopList.size());
+	}
+
 }
