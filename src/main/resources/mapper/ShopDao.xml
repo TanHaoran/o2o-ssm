@@ -132,7 +132,7 @@
 			</if>
 			<if test="shopCondition.shopName != null">
 				AND
-				s.shop_name like '%${shopCondition.shopName%'
+				s.shop_name like '%${shopCondition.shopName}%'
 			</if>
 			<if test="shopCondition.enableStatus != null">
 				AND
@@ -181,7 +181,7 @@
 			</if>
 			<if test="shopCondition.shopName != null">
 				AND
-				s.shop_name like '%${shopCondition.shopName%'
+				s.shop_name like '%${shopCondition.shopName}%'
 			</if>
 			<if test="shopCondition.enableStatus != null">
 				AND

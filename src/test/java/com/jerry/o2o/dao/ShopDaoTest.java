@@ -106,5 +106,14 @@ public class ShopDaoTest extends BaseTest {
 
 		assertEquals(9, shopList.size());
 	}
+	
+	@Test
+	public void testQueryShopListByName() {
+		Shop shopCondition = new Shop();
+		shopCondition.setShopName("兔宝宝");
+		List<Shop> result = shopDao.queryShopList(shopCondition, 0, 99);
+		assertEquals(1, result.size());
+		
+	}
 
 }
